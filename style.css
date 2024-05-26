@@ -43,3 +43,13 @@ main {
 #stop-record img {
   width: 3vw;
 }
+
+@media (min-width: 321px) and (max-width: 480px) {
+  #result {
+    font-size: 8vw;
+  }
+  #start-record img,
+  #stop-record img {
+    width: 15vw;
+  }
+}
