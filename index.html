@@ -5,14 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Speech Recognition</title>
   </head>
+  <link rel="stylesheet" href="./style.css">
   <body>
-    <button id="start-record">Start Recording</button>
-    <button id="stop-record">Stop Recording</button>
-    <p id="result"></p>
+    <main>
+      <p id="result"></p>
+      <div id="btns">
+        <button id="start-record"><img src="./assets/icons/mic.png" alt="start recordig button"/></button>
+        <button id="stop-record"><img src="./assets/icons/mic.gif" alt="stop recordig button"/></button>
+      </main>
+      </div>
     <script>
       const startButton = document.getElementById("start-record");
       const stopButton = document.getElementById("stop-record");
       const resultPara = document.getElementById("result");
+
+      stopButton.style.display = "none";
+      resultPara.style.display = "none";
 
       let recognition;
       if ("webkitSpeechRecognition" in window) {
@@ -35,12 +43,19 @@
       }
 
       startButton.addEventListener("click", () => {
+        startButton.style.display = "none";
+        stopButton.style.display = "block";
+        resultPara.style.display = "block";
+        
         if (recognition) {
           recognition.start();
         }
       });
-
+      
       stopButton.addEventListener("click", () => {
+        startButton.style.display = "block";
+        stopButton.style.display = "none";
+        resultPara.style.display = "none";
         if (recognition) {
           recognition.stop();
         }
