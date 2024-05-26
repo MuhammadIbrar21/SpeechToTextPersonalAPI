@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Speech Recognition</title>
+  </head>
+  <body>
+    <button id="start-record">Start Recording</button>
+    <button id="stop-record">Stop Recording</button>
+    <p id="result"></p>
+    <script>
+      const startButton = document.getElementById("start-record");
+      const stopButton = document.getElementById("stop-record");
+      const resultPara = document.getElementById("result");
+
+      let recognition;
+      if ("webkitSpeechRecognition" in window) {
+        recognition = new webkitSpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = false;
+        recognition.lang = "en-US";
+
+        recognition.onresult = (event) => {
+          const transcript = event.results[0][0].transcript;
+          resultPara.textContent = transcript;
+          window.ReactNativeWebView.postMessage(transcript);
+        };
+
+        recognition.onerror = (event) => {
+          console.error("Speech recognition error", event);
+        };
+      } else {
+        alert("Speech recognition not supported in this browser.");
+      }
+
+      startButton.addEventListener("click", () => {
+        if (recognition) {
+          recognition.start();
+        }
+      });
+
+      stopButton.addEventListener("click", () => {
+        if (recognition) {
+          recognition.stop();
+        }
+      });
+    </script>
+  </body>
+</html>
